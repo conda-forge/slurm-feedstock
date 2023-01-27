@@ -1,16 +1,16 @@
-{% set version = "22.05.4" %}
+{% set version = "22.05.8" %}
 
 package:
   name: slurm
-  version:  {{ version }}
+  version: {{ version }}
 
 source:
   url: https://download.schedmd.com/slurm/slurm-{{ version }}.tar.bz2
-  sha256: 868b7f5eb8501b8b52f602253b122ce52fab8b33d1199acce6ba09fd9c2f1945
+  sha256: ef106685e45e062973270182c8804b3e862978031cbe9b897ebe477fb28be2d8
 
 build:
-  skip: True  # [not linux]
-  number: 1
+  skip: true  # [not linux]
+  number: 0
 
 requirements:
   build:
@@ -45,7 +45,7 @@ test:
 
 about:
   home: https://slurm.schedmd.com/
-  summary: 'cluster management and job scheduling system for Linux clusters'
+  summary: cluster management and job scheduling system for Linux clusters
   license: GPL-2.0-only
   license_family: GPL2
   license_file: COPYING
