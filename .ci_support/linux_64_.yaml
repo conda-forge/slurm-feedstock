@@ -20,6 +20,8 @@ krb5:
 - '1.21'
 libcurl:
 - '8'
+mysql_devel:
+- '8.3'
 openssl:
 - '3'
 target_platform:
