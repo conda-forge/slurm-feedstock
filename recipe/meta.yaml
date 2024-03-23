@@ -1,4 +1,4 @@
-{% set version = "22.05.9" %}
+{% set version = "22.05.11" %}
 
 package:
   name: slurm
@@ -6,11 +6,11 @@ package:
 
 source:
   url: https://download.schedmd.com/slurm/slurm-{{ version }}.tar.bz2
-  sha256: 0b732f293ca7ba226c21a58981dee37d668afdedad2fb2a485e8b3eff585d0d2
+  sha256: cb860cabfc39e0a0f71759b28aa0e0a2fed1059269a5cb83686aa6e10c9078a6
 
 build:
   skip: true  # [not linux]
-  number: 2
+  number: 0
 
 requirements:
   build:
