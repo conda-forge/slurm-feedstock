@@ -10,12 +10,13 @@ source:
 
 build:
   skip: true  # [not linux]
-  number: 2
+  number: 3
 
 requirements:
   build:
     - make
     - {{ compiler("c") }}
+    - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
   host:
     - munge
