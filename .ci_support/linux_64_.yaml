@@ -23,7 +23,7 @@ krb5:
 libcurl:
 - '8'
 mysql_devel:
-- '9.5'
+- '9.6'
 openssl:
 - '3.5'
 target_platform:
