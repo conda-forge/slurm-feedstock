@@ -6,4 +6,4 @@ set -euxo pipefail
     --with-mysql_config="$PREFIX/bin" || { grep -A30 -B5 'error:' config.log; exit 1; }
 make -j"$CPU_COUNT"
 make install
-make check
+make check VERBOSE=1
