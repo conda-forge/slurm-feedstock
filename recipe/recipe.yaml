@@ -64,7 +64,9 @@ tests:
   - script:
       - slurmd -h
       - slurmctld -h
-      - slurmdbd -V
+      - printf 'DbdHost=localhost\nStorageType=accounting_storage/mysql\nSlurmUser=%s\n' "$(id -un)" > slurmdbd.conf
+      - chmod 600 slurmdbd.conf
+      - SLURM_CONF="$PWD/slurm.conf" slurmdbd -V
       - srun --version
   - requirements:
       run:

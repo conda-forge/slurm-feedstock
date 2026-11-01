@@ -11,3 +11,4 @@ make install
 make clean
 make -j"$CPU_COUNT" CFLAGS="$CFLAGS -fplt" LDFLAGS="$LDFLAGS -Wl,-z,lazy"
 make check VERBOSE=1 CFLAGS="$CFLAGS -fplt" LDFLAGS="$LDFLAGS -Wl,-z,lazy"
+"$READELF" -d "$PREFIX/bin/slurmctld" | grep BIND_NOW
