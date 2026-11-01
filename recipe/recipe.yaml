@@ -1,0 +1,92 @@
+schema_version: 1
+
+context:
+  version: "26.05.5"
+
+package:
+  name: slurm
+  version: ${{ version }}
+
+source:
+  url: https://download.schedmd.com/slurm/slurm-${{ version }}.tar.bz2
+  sha256: 4680cafc82b0689865c885eb703441e7ebf764896c40fd03a50f2fcb60664f68
+
+build:
+  skip: not linux
+  number: 0
+
+requirements:
+  build:
+    - make
+    - pkg-config
+    - ${{ compiler('c') }}
+    - ${{ stdlib('c') }}
+    - ${{ compiler('cxx') }}
+  host:
+    - check
+    - json-c
+    - yaml
+    - munge
+    - mysql-devel
+    - bzip2
+    - zlib
+    - zstd
+    - openssl
+    - libcurl
+    - krb5
+    - keyutils
+    - libedit
+  run:
+    - munge
+
+tests:
+  - package_contents:
+      bin:
+        - sacct
+        - salloc
+        - sprio
+        - srun
+        - sshare
+        - sstat
+        - strigger
+        - slurmd
+        - slurmctld
+        - slurmdbd
+      include:
+        - slurm/slurm.h
+      lib:
+        - slurm
+      files:
+        - lib/slurm/auth_munge.so
+        - lib/slurm/accounting_storage_mysql.so
+        - lib/slurm/serializer_json.so
+        - lib/slurm/serializer_yaml.so
+  - script:
+      - printf 'ClusterName=conda-test\nSlurmctldHost=localhost\n' > slurm.conf
+      - printf 'DbdHost=localhost\nStorageType=accounting_storage/mysql\nSlurmUser=%s\n' "$(id -un)" > slurmdbd.conf
+      - chmod 600 slurmdbd.conf
+      - export SLURM_CONF="$PWD/slurm.conf"
+      - slurmd -h
+      - slurmctld -h
+      - slurmdbd -V
+      - srun --version
+  - requirements:
+      run:
+        - ${{ compiler('c') }}
+    files:
+      recipe:
+        - consumer.c
+    script:
+      - $CC $CFLAGS consumer.c -I$PREFIX/include -L$PREFIX/lib $LDFLAGS -lslurm -o consumer
+      - ./consumer
+
+about:
+  homepage: https://slurm.schedmd.com/
+  summary: cluster management and job scheduling system for Linux clusters
+  license: GPL-2.0-only
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - luizirber
+    - msarahan
