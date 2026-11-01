@@ -27,7 +27,7 @@ requirements:
     - munge
     - mysql-devel
     - bzip2
-    - libzlib
+    - zlib
     - zstd
     - openssl
     - libcurl
