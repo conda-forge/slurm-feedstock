@@ -6,5 +6,9 @@ set -euxo pipefail
     --with-mysql_config="$PREFIX/bin" || { grep -A30 -B5 'error:' config.log; exit 1; }
 make -j"$CPU_COUNT"
 make install
-# Test harnesses intentionally leave unused daemon symbols unresolved; installed binaries keep hardening.
-make check VERBOSE=1 CFLAGS="$CFLAGS -fplt" LDFLAGS="$LDFLAGS -Wl,-z,lazy"
+# Rebuild only the test tree for lazy daemon symbols; do not reinstall over the hardened package.
+make clean
+export CFLAGS="$CFLAGS -fplt"
+export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
+make -j"$CPU_COUNT"
+make check VERBOSE=1
