@@ -1,5 +1,9 @@
-./configure --prefix=$PREFIX --sysconfdir=$PREFIX
-make -j$CPU_COUNT
+#!/bin/bash
+set -euxo pipefail
+
+./configure --prefix="$PREFIX" --sysconfdir="$PREFIX" \
+    --sbindir="$PREFIX/bin" --with-munge="$PREFIX" \
+    --with-mysql_config="$PREFIX/bin"
+make -j"$CPU_COUNT"
 make install
 make check
-mv $PREFIX/sbin/* $PREFIX/bin/
