@@ -24,6 +24,8 @@ requirements:
     - ${{ compiler('cxx') }}
   host:
     - check
+    - json-c
+    - yaml
     - munge
     - mysql-devel
     - bzip2
@@ -57,6 +59,8 @@ tests:
       files:
         - lib/slurm/auth_munge.so
         - lib/slurm/accounting_storage_mysql.so
+        - lib/slurm/serializer_json.so
+        - lib/slurm/serializer_yaml.so
   - script:
       - slurmd -h
       - slurmctld -h
