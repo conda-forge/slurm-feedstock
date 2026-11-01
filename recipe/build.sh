@@ -8,7 +8,5 @@ make -j"$CPU_COUNT"
 make install
 # Rebuild only the test tree for lazy daemon symbols; do not reinstall over the hardened package.
 make clean
-export CFLAGS="$CFLAGS -fplt"
-export LDFLAGS="$LDFLAGS -Wl,-z,lazy"
-make -j"$CPU_COUNT"
-make check VERBOSE=1
+make -j"$CPU_COUNT" CFLAGS="$CFLAGS -fplt" LDFLAGS="$LDFLAGS -Wl,-z,lazy"
+make check VERBOSE=1 CFLAGS="$CFLAGS -fplt" LDFLAGS="$LDFLAGS -Wl,-z,lazy"
